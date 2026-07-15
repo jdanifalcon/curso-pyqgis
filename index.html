@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Python en QGIS - Diseño Editorial con Topografía</title>
+    <style>
+        /* =========================================
+           IMPORTACIÓN DE FUENTES (GOOGLE FONTS)
+           ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,900;1,900&display=swap');
+
+        /* =========================================
+           VARIABLES DE COLOR Y DISEÑO
+           ========================================= */
+        :root {
+            --bg-white: #FAFAFA;
+            --dark-grey: #222222;
+            --py-blue: #306998;
+            --py-yellow: #FFD43B;
+            --qgis-green: #4CAF50;
+            --soft-green: rgba(76, 175, 80, 0.04);
+            --line-color: rgba(34, 34, 34, 0.1);
+        }
+
+        /* =========================================
+           RESETEO BÁSICO
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #E5E5E5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem;
+        }
+
+        /* =========================================
+           CONTENEDOR PRINCIPAL DEL CARTEL (3:4)
+           ========================================= */
+        .poster {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 3 / 4;
+            background-color: var(--bg-white);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            container-type: inline-size;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================
+           ELEMENTOS DE FONDO Y DECORATIVOS
+           ========================================= */
+        .soft-block {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35%;
+            height: 100%;
+            background-color: var(--soft-green);
+            z-index: 1;
+            border-left: 1px solid var(--line-color);
+        }
+
+        .bg-code {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5cqw;
+            color: var(--dark-grey);
+            opacity: 0.06;
+            line-height: 1.6;
+            z-index: 1;
+            pointer-events: none;
+            white-space: pre;
+        }
+
+        /* Contenedor del patrón topográfico SVG */
+        .topo-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .geo-lines {
+            position: absolute;
+            top: 8%;
+            right: 12%;
+            width: 15%;
+            height: 15%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .geo-lines .v-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: -50%;
+            width: 1px;
+            background-color: var(--line-color);
+        }
+
+        .geo-lines .h-line {
+            position: absolute;
+            top: 50%;
+            left: -50%;
+            right: 0;
+            height: 1px;
+            background-color: var(--line-color);
+        }
+
+        .geo-lines .dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background-color: var(--py-blue);
+            transform: translate(-50%, -50%);
+        }
+
+        /* =========================================
+           CONTENIDO PRINCIPAL
+           ========================================= */
+        .content {
+            position: relative;
+            z-index: 10;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 6cqw 8cqw;
+        }
+
+        /* --- SECCIÓN SUPERIOR: TÍTULOS Y PÁRRAFO EDITORIAL --- */
+        .header-section {
+            margin-top: 1cqw;
+            max-width: 90%;
+        }
+
+        .tag {
+            font-size: 1.2cqw;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            color: var(--qgis-green);
+            font-weight: 600;
+            margin-bottom: 1.5cqw;
+            display: inline-block;
+            position: relative;
+            padding-left: 2cqw;
+        }
+
+        .tag::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 1cqw;
+            height: 1px;
+            background-color: var(--qgis-green);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 5cqw;
+            line-height: 1.05;
+            color: var(--dark-grey);
+            margin-bottom: 2cqw;
+            letter-spacing: -0.02em;
+        }
+
+        .color-py { color: var(--py-blue); }
+        .color-qgis { color: var(--qgis-green); }
+
+        /* Estilo del Párrafo Editorial Destacado */
+        .editorial-paragraph {
+            font-size: 1.35cqw;
+            font-weight: 300;
+            color: #444;
+            line-height: 1.6;
+            max-width: 85%;
+            border-left: 2px solid var(--py-blue);
+            padding-left: 1.5cqw;
+            margin-bottom: 1cqw;
+        }
+
+        /* --- TEXTO EDITORIAL (OBJETIVO Y PÚBLICO) --- */
+        .editorial-text-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4cqw;
+            margin-top: 2cqw;
+            max-width: 90%;
+            border-top: 1px solid var(--line-color);
+            padding-top: 1.5cqw;
+        }
+
+        .ed-col h3 {
+            font-size: 0.85cqw;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--py-blue);
+            margin-bottom: 0.8cqw;
+            font-weight: 600;
+        }
+
+        .ed-col p {
+            font-size: 1.1cqw;
+            line-height: 1.5;
+            color: #555;
+            font-weight: 300;
+        }
+
+        /* --- SECCIÓN MEDIA: TEMARIO VERTICAL --- */
+        .modules-section {
+            margin-top: 3cqw;
+            margin-bottom: 1cqw;
+            max-width: 85%;
+        }
+
+        .modules-title {
+            font-size: 0.85cqw;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #888;
+            margin-bottom: 1.5cqw;
+            font-weight: 500;
+        }
+
+        .modules-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5cqw;
+        }
+
+        .module {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--line-color);
+            padding-top: 1cqw;
+        }
+
+        .mod-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1cqw;
+            margin-bottom: 0.5cqw;
+        }
+
+        .mod-num {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.6cqw;
+            color: var(--py-blue);
+            font-weight: 900;
+        }
+
+        .mod-text {
+            font-size: 1.25cqw;
+            font-weight: 500;
+            color: var(--dark-grey);
+        }
+
+        .mod-list {
+            list-style: none;
+            padding-left: 2.6cqw;
+        }
+
+        .mod-list li {
+            font-size: 1cqw;
+            color: #666;
+            line-height: 1.4;
+            position: relative;
+            margin-bottom: 0.2cqw;
+        }
+
+        .mod-list li::before {
+            content: '—';
+            position: absolute;
+            left: -1.2cqw;
+            color: var(--qgis-green);
+            font-weight: bold;
+        }
+
+        /* --- ESPACIADOR FLEXIBLE --- */
+        .spacer {
+            flex-grow: 1;
+        }
+
+        /* --- SECCIÓN INFERIOR: INFORMACIÓN Y PRECIOS --- */
+        .info-section {
+            border-top: 1px solid var(--line-color);
+            padding-top: 3cqw;
+            display: grid;
+            grid-template-columns: 3fr 3fr 4fr;
+            gap: 2cqw;
+        }
+
+        .info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 2cqw;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85cqw;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #888;
+            margin-bottom: 0.6cqw;
+            border-left: 1px solid var(--py-yellow);
+            padding-left: 1cqw;
+        }
+
+        .info-value {
+            font-size: 1.15cqw;
+            color: var(--dark-grey);
+            font-weight: 400;
+            padding-left: 1cqw;
+        }
+
+        .info-col:nth-child(2) .info-label {
+            border-left-color: var(--py-blue);
+        }
+
+        .price-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding-left: 2cqw;
+            border-left: 1px solid var(--line-color);
+        }
+
+        .price-tier {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-bottom: 1.2cqw;
+        }
+
+        .price-tier:last-of-type {
+            margin-bottom: 0.4cqw;
+        }
+
+        .price-label {
+            font-size: 0.8cqw;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #888;
+            margin-bottom: 0.4cqw;
+        }
+
+        .price-value {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 3.5cqw;
+            color: var(--dark-grey);
+            line-height: 1;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5cqw;
+        }
+
+        .price-currency {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 1.2cqw;
+            color: #666;
+            letter-spacing: 0.05em;
+        }
+
+        .price-note {
+            font-size: 0.8cqw;
+            color: #999;
+            font-style: italic;
+            text-align: right;
+            max-width: 90%;
+            line-height: 1.4;
+            margin-top: 0.5cqw;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="poster">
+        
+        <div class="soft-block"></div>
+
+        <div class="topo-bg">
+            <svg width="100%" height="100%" viewBox="0 0 800 1066" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="rgba(34, 34, 34, 0.04)" stroke-width="1.5" fill="none">
+                    <path d="M850,100 C650,150 550,300 850,500" />
+                    <path d="M850,70 C620,120 510,310 850,540" />
+                    <path d="M850,40 C590,90 470,320 850,580" />
+                    <path d="M850,10 C560,60 430,330 850,620" />
+                    <path d="M850,-20 C530,30 390,340 850,660" />
+                    <path d="M850,-50 C500,0 350,350 850,700" />
+
+                    <path d="M-50,750 C150,800 250,900 -50,1100" />
+                    <path d="M-50,710 C190,770 300,890 20,1100" />
+                    <path d="M-50,670 C230,740 350,880 90,1100" />
+                    <path d="M-50,630 C270,710 400,870 160,1100" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="geo-lines">
+            <div class="v-line"></div>
+            <div class="h-line"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="bg-code">
+from qgis.core import *
+
+layer = iface.activeLayer()
+
+for feature in layer.getFeatures():
+    print(feature.id())
+    
+    geom = feature.geometry()
+    area = geom.area()
+        </div>
+
+        <div class="content">
+            
+            <div class="header-section">
+                <span class="tag">Curso Práctico</span>
+                <h1>Introducción a <br><span class="color-py">Python</span> en <span class="color-qgis">QGIS</span></h1>
+                
+                <p class="editorial-paragraph">
+                    <strong>Optimiza tus flujos de trabajo espaciales.</strong> Este curso está diseñado para usuarios de QGIS que desean aprender los fundamentos de programación con Python. Pasa de conceptos iniciales a la aplicación de PyQGIS para consultar información, manipular capas y automatizar tareas sencillas.
+                </p>
+            </div>
+
+            <div class="editorial-text-grid">
+                <div class="ed-col">
+                    <h3>Objetivo</h3>
+                    <p>Introducir el uso de Python aplicado a SIG, desarrollando habilidades fundamentales para interactuar y optimizar flujos de trabajo geoespaciales mediante código.</p>
+                </div>
+                <div class="ed-col">
+                    <h3>Dirigido a</h3>
+                    <p>Estudiantes, profesionales ambientales, biólogos, analistas SIG, etc. <em>(No se requieren conocimientos previos en programación)</em>.</p>
+                </div>
+            </div>
+
+            <div class="modules-section">
+                <div class="modules-title">Módulos del Programa</div>
+                <div class="modules-grid">
+                    
+                    <div class="module">
+                        <div class="mod-header">
+                            <span class="mod-num">01</span>
+                            <span class="mod-text">Fundamentos de Python desde cero</span>
+                        </div>
+                        <ul class="mod-list">
+                            <li>Uso de la consola, ejecución de comandos y creación de variables.</li>
+                            <li>Estructuras de datos (texto, números, listas) y condicionales.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module">
+                        <div class="mod-header">
+                            <span class="mod-num">02</span>
+                            <span class="mod-text">Introducción a la biblioteca PyQGIS</span>
+                        </div>
+                        <ul class="mod-list">
+                            <li>Acceso al proyecto actual (QgsProject) e identificación de capas.</li>
+                            <li>Consulta de información general: nombre, elementos y campos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="module">
+                        <div class="mod-header">
+                            <span class="mod-num">03</span>
+                            <span class="mod-text">Trabajo con datos geográficos y atributos</span>
+                        </div>
+                        <ul class="mod-list">
+                            <li>Lectura de atributos, geometrías y entidades (features).</li>
+                            <li>Selección automática y filtros mediante expresiones.</li>
+                        </ul>
+                    </div>
+
+                    <div class="module">
+                        <div class="mod-header">
+                            <span class="mod-num">04</span>
+                            <span class="mod-text">Automatización básica en QGIS</span>
+                        </div>
+                        <ul class="mod-list">
+                            <li>Creación de scripts para contar elementos y revisar atributos.</li>
+                            <li>Proyecto final: Automatización integral de una capa SIG.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="spacer"></div>
+
+            <div class="info-section">
+                
+                <div class="info-col">
+                    <div class="info-item">
+                        <span class="info-label">Instructor</span>
+                        <span class="info-value">Jessica Ocaña</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Contacto</span>
+                        <span class="info-value">hellojfalcon@gmail.com</span>
+                    </div>
+                </div>
+
+                <div class="info-col">
+                    <div class="info-item">
+                        <span class="info-label">Fechas</span>
+                        <span class="info-value">27, 28 y 29 de julio</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Modalidad / Horas</span>
+                        <span class="info-value">En línea / 8 horas totales</span>
+                    </div>
+                </div>
+
+                <div class="price-block">
+                    <div class="price-tier">
+                        <span class="price-label">Profesionales</span>
+                        <div class="price-value">
+                            $1,000 <span class="price-currency">MXN</span>
+                        </div>
+                    </div>
+                    <div class="price-tier">
+                        <span class="price-label">Estudiantes*</span>
+                        <div class="price-value">
+                            $500 <span class="price-currency">MXN</span>
+                        </div>
+                    </div>
+                    <span class="price-note">*Adjuntar foto de credencial vigente en el formulario.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
