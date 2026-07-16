@@ -23,13 +23,9 @@ Este curso está diseñado para profesionales que utilizan QGIS en su día a dí
 *El objetivo de este módulo es perder el miedo al código, entendiendo la sintaxis básica antes de interactuar con el mapa.*
 
 * **Introducción a Python:** ¿Qué es y por qué usarlo en Sistemas de Información Geográfica?
-* 
 * **Primer contacto:** Uso de la consola de Python integrada en QGIS.
-* 
 * **Sintaxis básica:** Creación de variables y tipos de datos (texto, números, booleanos).
-* 
 * **Estructuras y decisiones:** Uso de Listas y sentencias condicionales (If / Else).
-* 
 * **Buenas prácticas:** Cómo comentar y organizar el código de forma limpia.
 
 ### MÓDULO 2: Introducción a PyQGIS y Primeras Automatizaciones
