@@ -1,10 +1,14 @@
 # Curso: Introducción a Python en QGIS
 ## Automatización básica de procesos geoespaciales
 
-**Duración:** 8 horas totales  
-**Modalidad:** En línea  
-**Nivel:** Principiantes (sin experiencia previa en programación)  
+**Duración:** 8 horas totales
+
+**Modalidad:** En línea
+
+**Nivel:** Principiantes (sin experiencia previa en programación)
+
 **Dirigido a:** Arquitectos, biólogos, arqueólogos, urbanistas y profesionales afines a los Sistemas de Información Geográfica (SIG).
+
 **Instructora:** Jessica Daniela Ocaña Falcón
 ---
 
@@ -17,10 +21,15 @@ Este curso está diseñado para profesionales que utilizan QGIS en su día a dí
 
 ### MÓDULO 1: Fundamentos de Python desde cero
 *El objetivo de este módulo es perder el miedo al código, entendiendo la sintaxis básica antes de interactuar con el mapa.*
+
 * **Introducción a Python:** ¿Qué es y por qué usarlo en Sistemas de Información Geográfica?
+* 
 * **Primer contacto:** Uso de la consola de Python integrada en QGIS.
+* 
 * **Sintaxis básica:** Creación de variables y tipos de datos (texto, números, booleanos).
+* 
 * **Estructuras y decisiones:** Uso de Listas y sentencias condicionales (If / Else).
+* 
 * **Buenas prácticas:** Cómo comentar y organizar el código de forma limpia.
 
 ### MÓDULO 2: Introducción a PyQGIS y Primeras Automatizaciones
