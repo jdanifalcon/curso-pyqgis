@@ -1,252 +1,67 @@
-# 🐍 Introducción a Python en QGIS: Automatización básica de procesos geoespaciales
-
-Duración: 8 horas
-Modalidad: En línea
-Nivel: Principiante
-
---------------------------------------------------
-
-DESCRIPCIÓN
-
-Este repositorio contiene el material del curso "Introducción a Python en QGIS", diseñado para usuarios que desean aprender programación desde cero y comenzar a automatizar tareas sencillas dentro de QGIS utilizando PyQGIS.
-
-No se requieren conocimientos previos de programación.
-
-A lo largo del curso se desarrollarán ejercicios prácticos para comprender los fundamentos de Python y su aplicación en Sistemas de Información Geográfica (SIG).
-
---------------------------------------------------
-
-OBJETIVO GENERAL
-
-Introducir a los participantes en los fundamentos de Python y PyQGIS para desarrollar pequeños scripts que permitan automatizar tareas y mejorar los flujos de trabajo dentro de QGIS.
-
---------------------------------------------------
-
-OBJETIVOS ESPECÍFICOS
-
-Al finalizar el curso, el participante será capaz de:
-
-* Comprender los conceptos básicos de programación con Python.
-* Utilizar la consola Python integrada en QGIS.
-* Consultar proyectos y capas mediante PyQGIS.
-* Leer información de atributos.
-* Crear scripts sencillos para automatizar tareas repetitivas.
-* Comprender la estructura básica de un script en Python.
-
---------------------------------------------------
-
-PÚBLICO OBJETIVO
-
-Este curso está dirigido a:
-
-* Estudiantes de Geografía.
-* Profesionales en Gestión Ambiental.
-* Biólogos.
-* Arqueólogos.
-* Ingenieros.
-* Analistas SIG.
-* Usuarios de QGIS interesados en aprender programación.
-
---------------------------------------------------
-
-DURACIÓN
-
-8 horas totales
-
-4 sesiones de 2 horas cada una.
-
---------------------------------------------------
-
-TEMARIO
-
-=========================
-MÓDULO 1
-FUNDAMENTOS DE PYTHON DESDE CERO
-=========================
-
-Objetivo:
-Comprender los conceptos básicos de programación.
-
-Temas:
-
-1. ¿Qué es Python?
-2. ¿Por qué Python se utiliza en SIG?
-3. Instalación y uso de la consola Python de QGIS.
-4. Variables.
-5. Tipos de datos.
-6. Listas.
-7. Operadores.
-8. Condicionales.
-9. Buenas prácticas para escribir código.
-10. Primeros ejercicios.
-
-Actividades:
-
-* Crear variables.
-* Mostrar información en pantalla.
-* Resolver pequeños ejercicios utilizando condicionales.
-
---------------------------------------------------
-
-=========================
-MÓDULO 2
-INTRODUCCIÓN A PYQGIS
-=========================
-
-Objetivo:
-Aprender a interactuar con QGIS mediante Python.
-
-Temas:
-
-1. ¿Qué es PyQGIS?
-2. La consola Python de QGIS.
-3. Estructura de un proyecto en QGIS.
-4. Acceder al proyecto actual.
-5. Consultar capas cargadas.
-6. Obtener la capa activa.
-7. Consultar información básica de una capa.
-8. Número de elementos.
-9. Campos de una capa.
-
-Actividades:
-
-* Mostrar todas las capas del proyecto.
-* Consultar la capa activa.
-* Obtener información de una capa.
-* Contar elementos.
-* Mostrar los campos disponibles.
-
---------------------------------------------------
-
-=========================
-MÓDULO 3
-TRABAJO CON DATOS GEOGRÁFICOS
-=========================
-
-Objetivo:
-Consultar información geográfica mediante Python.
-
-Temas:
-
-1. ¿Qué es una Feature?
-2. Geometrías.
-3. Atributos.
-4. Consultar elementos.
-5. Leer atributos.
-6. Consultar un atributo específico.
-7. Selección automática mediante expresiones.
-8. Introducción a filtros.
-
-Actividades:
-
-* Mostrar atributos.
-* Leer información específica.
-* Filtrar elementos.
-* Seleccionar registros mediante código.
-
---------------------------------------------------
-
-=========================
-MÓDULO 4
-AUTOMATIZACIÓN BÁSICA EN QGIS
-=========================
-
-Objetivo:
-Desarrollar pequeños scripts útiles para automatizar procesos.
-
-Temas:
-
-1. Automatización en SIG.
-2. Organización de scripts.
-3. Uso de comentarios.
-4. Variables reutilizables.
-5. Creación de pequeños procesos automáticos.
-6. Proyecto final.
-
-Proyecto Final:
-
-Crear un script capaz de:
-
-* Obtener la capa activa.
-* Mostrar su nombre.
-* Contar sus elementos.
-* Mostrar los campos.
-* Consultar atributos.
-* Generar un pequeño reporte en consola.
-
---------------------------------------------------
-
-REQUISITOS
-
-* QGIS versión 3.x.
-* Computadora con Windows, Linux o macOS.
-* No se requieren conocimientos previos de programación.
-* No es necesario instalar Python por separado, ya que QGIS incluye PyQGIS.
-
---------------------------------------------------
-
-ESTRUCTURA DEL REPOSITORIO
-
-Python-QGIS-Basico/
-
-README.md
-
-01_Fundamentos_Python/
-    variables.py
-    listas.py
-    condicionales.py
-
-02_PyQGIS/
-    README.md
-    actividad_01_consola_qgis.py
-    actividad_02_capas_proyecto.py
-    actividad_03_capa_activa.py
-    actividad_04_informacion_capa.py
-    actividad_05_consultar_atributos.py
-
-03_Datos_Geograficos/
-
-04_Automatizacion/
-
-datos/
-
-material/
-
---------------------------------------------------
-
-MATERIAL DEL CURSO
-
-* Manual en PDF.
-* Presentaciones.
-* Código de todos los ejemplos.
-* Scripts desarrollados durante el curso.
-* Ejercicios prácticos.
-* Archivos de práctica.
-* Repositorio en GitHub.
+# Curso: Introducción a Python en QGIS
+## Automatización básica de procesos geoespaciales
+
+**Duración:** 8 horas totales  
+**Modalidad:** En línea  
+**Nivel:** Principiantes (sin experiencia previa en programación)  
+**Dirigido a:** Arquitectos, biólogos, arqueólogos, urbanistas y profesionales afines a los Sistemas de Información Geográfica (SIG).
+**Instructora:** Jessica Daniela Ocaña Falcón
+---
+
+## 📖 Descripción del Curso
+Este curso está diseñado para profesionales que utilizan QGIS en su día a día y desean aprender a automatizar tareas repetitivas, gestionar bases de datos pesadas y optimizar sus flujos de trabajo utilizando Python (PyQGIS). No se requieren conocimientos previos de programación; aprenderás desde la sintaxis básica hasta la creación de scripts funcionales.
+
+---
+
+## 🗺️ Temario
+
+### MÓDULO 1: Fundamentos de Python desde cero
+*El objetivo de este módulo es perder el miedo al código, entendiendo la sintaxis básica antes de interactuar con el mapa.*
+* **Introducción a Python:** ¿Qué es y por qué usarlo en Sistemas de Información Geográfica?
+* **Primer contacto:** Uso de la consola de Python integrada en QGIS.
+* **Sintaxis básica:** Creación de variables y tipos de datos (texto, números, booleanos).
+* **Estructuras y decisiones:** Uso de Listas y sentencias condicionales (If / Else).
+* **Buenas prácticas:** Cómo comentar y organizar el código de forma limpia.
+
+### MÓDULO 2: Introducción a PyQGIS y Primeras Automatizaciones
+*Damos el salto a la interfaz de QGIS, aplicando código para consultar información y resolver problemas comunes de coordenadas.*
+* **Conectando Python con QGIS:** Acceso al proyecto actual y selección de capas activas.
+* **Exploración de datos:** Consulta de geometrías, campos y atributos mediante código.
+* **Sistemas de Coordenadas (CRS):** Entendiendo la transformación de EPSG en memoria.
+* **PRÁCTICA ESTRELLA:** Extracción automatizada de coordenadas X, Y. 
+  * *Caso práctico:* Tomaremos una capa de puntos, transformaremos sus coordenadas al vuelo (Ej. del sistema oficial de México EPSG:6372 a otro sistema métrico) y las guardaremos en la tabla de atributos redondeadas a dos decimales.
+
+### MÓDULO 3: Procesamiento Geométrico y Filtros Masivos
+*Aprenderemos a manipular capas masivas y a realizar cálculos tediosos en cuestión de segundos.*
+* **PRÁCTICA 1: Automatización de cálculos y uniones.**
+  * Uso de código para leer múltiples lotes/polígonos.
+  * Cálculo automático de Área y Perímetro en nuevas columnas.
+  * Unión masiva (Merge) de todos los lotes procesados en una sola capa final.
+* **Trabajo con bases de datos pesadas:** Identificación de atributos en capas oficiales.
+* **PRÁCTICA 2: Filtros de alta velocidad (Datos INEGI).**
+  * Carga de una capa masiva vectorial (Ej. Uso de Suelo, Vegetación o DENUE).
+  * Aplicación de filtros mediante Python para extraer información específica sin colapsar QGIS (Ej. "De 50,000 polígonos, extráeme únicamente los Manglares").
+
+### MÓDULO 4: Automatización Avanzada y Cierre de Proyecto
+*Usaremos las herramientas de geoproceso de QGIS (Processing) directamente desde Python para tareas complejas.*
+* **Llamado a algoritmos nativos:** Cómo usar la Caja de Herramientas desde el código.
+* **PRÁCTICA 1: Interpolación y Recorte (Clip).**
+  * Generación de un modelo de interpolación (IDW) a partir de puntos de muestreo.
+  * Recorte automático del raster resultante utilizando un polígono de límite (Área de estudio).
+* **PRÁCTICA 2 (PROYECTO FINAL): Limpieza y empaquetado de proyectos.**
+  * Script para buscar múltiples archivos Shapefiles sueltos en una carpeta y convertirlos automáticamente en una base de datos unificada en formato **GeoPackage**.
+* **Cierre del curso:** Repaso general, resolución de dudas y recursos para seguir aprendiendo.
+
+---
+
+## 💻 Requisitos
+* QGIS versión 3.x instalado.
+* Computadora con Windows, Linux o MacOS.
+* Ningún conocimiento previo de programación requerido.
+
+## 📦 Material Incluido
+* Manual del curso.
+* Código fuente de todos los scripts utilizados.
+* Archivos SIG de práctica (Vectores y Rasters).
+* Acceso al repositorio del curso.
 * Constancia digital de participación.
-
---------------------------------------------------
-
-AUTORA
-
-Jessica Daniela Ocaña Falcón
-
-Licenciada en Gestión Ambiental.
-
-Áreas de experiencia:
-
-* Sistemas de Información Geográfica (SIG).
-* Análisis espacial.
-* Bases de datos geográficas.
-* Automatización de procesos con Python y QGIS.
-* Gestión y análisis de información geoespacial.
-
---------------------------------------------------
-
-LICENCIA
-
-Este repositorio tiene fines educativos.
-
-Si utilizas el material, agradezco que cites la autoría correspondiente.
-
-© Jessica Daniela Ocaña Falcón
