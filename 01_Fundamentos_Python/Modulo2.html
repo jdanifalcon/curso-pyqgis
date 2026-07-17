@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2: Introducción a PyQGIS</title>
+    
+    <!-- Tipografía Inter de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. VARIABLES CSS (PALETA DE COLORES Y ESTILOS)
+           ========================================================================== */
+        :root {
+            --primary-blue: #2563eb;
+            --primary-green: #16a34a;
+            --bg-white: #ffffff;
+            --bg-gray: #f8fafc;
+            --border-gray: #e2e8f0;
+            --text-black: #0f172a;
+            --text-light: #475569;
+            --font-main: 'Inter', sans-serif;
+            --transition-speed: 0.6s;
+        }
+
+        /* ==========================================================================
+           2. ESTILOS BASE Y CONTENEDOR PRINCIPAL
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-black);
+            background-color: var(--bg-gray);
+            overflow: hidden; /* Evita el scroll global, se maneja por diapositiva */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-white);
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* ==========================================================================
+           3. DIAPOSITIVAS Y TRANSICIONES
+           ========================================================================== */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 4rem 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(50px);
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, visibility var(--transition-speed);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-50px);
+        }
+
+        /* ==========================================================================
+           4. TIPOGRAFÍA
+           ========================================================================== */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-black);
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        /* ==========================================================================
+           5. COMPONENTES (TARJETAS, CÓDIGO, DIAGRAMAS)
+           ========================================================================== */
+        
+        /* Tarjetas */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            fill: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* Bloques de Código */
+        .code-block {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #f8fafc;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+        }
+        
+        .code-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background-color: #ef4444; }
+        .dot.yellow { background-color: #f59e0b; }
+        .dot.green { background-color: #10b981; }
+
+        .token-keyword { color: #c678dd; }
+        .token-string { color: #98c379; }
+        .token-function { color: #61afef; }
+        .token-comment { color: #64748b; font-style: italic; }
+
+        /* Diagramas de Flujo CSS */
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .flow-diagram.horizontal {
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background-color: var(--bg-gray);
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            color: var(--text-black);
+            text-align: center;
+        }
+
+        .flow-box.accent {
+            border-color: var(--primary-green);
+            background-color: #f0fdf4;
+            color: var(--primary-green);
+        }
+
+        .arrow-down {
+            width: 0; 
+            height: 0; 
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid var(--border-gray);
+        }
+
+        .arrow-right {
+            width: 0; 
+            height: 0; 
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 15px solid var(--border-gray);
+        }
+
+        /* Listas Iconográficas */
+        .icon-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .icon-list li {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .icon-list svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary-green);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Cajas de notas */
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 2rem;
+        }
+
+        /* ==========================================================================
+           6. NAVEGACIÓN Y BARRA DE PROGRESO
+           ========================================================================== */
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .btn-nav {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            color: var(--text-black);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            background-color: var(--bg-gray);
+            transform: scale(1.05);
+        }
+        
+        .btn-nav svg { width: 24px; height: 24px; fill: currentColor; }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--border-gray);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-green);
+            transition: width 0.4s ease;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        
+        <!-- Barra de Progreso -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <!-- ==========================================================================
+             DIAPOSITIVAS
+             ========================================================================== -->
+
+        <!-- DIAPOSITIVA 1: Título -->
+        <section class="slide active">
+            <h3 style="color: var(--primary-green); text-transform: uppercase; letter-spacing: 2px;">Módulo 2</h3>
+            <h1>Introducción a PyQGIS y<br>primeras automatizaciones</h1>
+            <p class="subtitle">"Comenzaremos a controlar QGIS mediante Python."</p>
+        </section>
+
+        <!-- DIAPOSITIVA 2: ¿Qué aprenderás? -->
+        <section class="slide">
+            <h2>¿Qué aprenderás?</h2>
+            <p>El objetivo no es aprender informática, sino usar Python como una herramienta para hacer tu trabajo en SIG más rápido.</p>
+            <ul class="icon-list">
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Descubrir la consola Python de QGIS.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Comprender cómo Python se comunica con QGIS.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Acceder al proyecto abierto.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Leer información de capas vectoriales y ráster.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Consultar atributos en las tablas de datos.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Obtener geometrías (puntos, líneas, polígonos).</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Automatizar tareas simples y repetitivas.</li>
+            </ul>
+        </section>
+
+        <!-- DIAPOSITIVA 3: Conectando Python con QGIS -->
+        <section class="slide">
+            <h2>Conectando Python con QGIS</h2>
+            <p>Así es como fluye la información cuando escribimos código en QGIS:</p>
+            <div class="flow-diagram">
+                <div class="flow-box">QGIS (El programa)</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box accent">Consola Python (Donde escribimos)</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box">PyQGIS (El traductor)</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box accent">Proyecto abierto</div>
+                <div class="arrow-down"></div>
+                <div class="flow-diagram horizontal" style="margin:0; gap:20px;">
+                    <div class="flow-box">Capas</div>
+                    <div class="flow-box">Geometrías</div>
+                    <div class="flow-box">Resultados</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 4: La consola Python -->
+        <section class="slide">
+            <h2>La Consola Python</h2>
+            <p>Es la puerta de entrada para interactuar directamente con nuestro mapa usando comandos.</p>
+            
+            <div class="code-block" style="background:#f1f5f9; color:#0f172a; border: 1px solid #cbd5e1;">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <div style="padding-top: 10px; font-family: sans-serif;">
+                    <strong>Menú Superior QGIS</strong> ➔ Complementos ➔ Consola de Python
+                </div>
+            </div>
+
+            <div class="grid-cards" style="grid-template-columns: 1fr 1fr;">
+                <div class="card">
+                    <h3>Consola (Línea de comandos)</h3>
+                    <p>Ideal para pruebas rápidas y ejecutar instrucciones de una sola línea.</p>
+                </div>
+                <div class="card">
+                    <h3>Editor de Scripts</h3>
+                    <p>Ideal para escribir procesos largos (rutinas) y guardar el código para usarlo mañana.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Nota importante:</strong> No es necesario instalar Python adicional en tu computadora para comenzar con PyQGIS. ¡QGIS ya lo trae integrado de fábrica!
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 5: Nuestro primer programa -->
+        <section class="slide">
+            <h2>Nuestro primer programa</h2>
+            <p>Vamos a pedirle a QGIS que nos devuelva un mensaje de texto. Es el saludo tradicional en programación.</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code><span class="token-function">print</span>(<span class="token-string">"Hola PyQGIS"</span>)</code></pre>
+            </div>
+
+            <ul class="icon-list">
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg> <strong>print()</strong> es una función. Le dice a la computadora: "Muestra esto en la pantalla".</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg> <strong>Las comillas (" ")</strong> le indican a Python que lo de adentro es un texto, no una instrucción matemática.</li>
+            </ul>
+        </section>
+
+        <!-- DIAPOSITIVA 6: Conociendo los objetos principales -->
+        <section class="slide">
+            <h2>Conociendo los objetos principales</h2>
+            <p>En PyQGIS, todo es un "objeto". Estos son los protagonistas de tus mapas:</p>
+            
+            <div class="grid-cards" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card">
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8h16M8 4v16" stroke="currentColor" stroke-width="2"/></svg>
+                    <h3>QgsProject</h3>
+                    <p>Representa tu archivo de proyecto (.qgz).<br><small>Ej. Tu mapa actual.</small></p>
+                </div>
+                <div class="card">
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-10-5v2.5l10 5 10-5V9.5l-10 5z" fill="currentColor"/></svg>
+                    <h3>QgsVectorLayer</h3>
+                    <p>Una capa vectorial (Puntos, líneas o polígonos).<br><small>Ej. Ríos.shp.</small></p>
+                </div>
+                <div class="card">
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M21 3H3v18h18V3zM5 19V5h14v14H5zm11-4l-3-4-3 4-2-2-2 4h10z" fill="currentColor"/></svg>
+                    <h3>QgsRasterLayer</h3>
+                    <p>Una capa de píxeles/imágenes.<br><small>Ej. Un Modelo Digital de Elevación (DEM).</small></p>
+                </div>
+                <div class="card">
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M3 3h18v18H3z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+                    <h3>QgsFeature</h3>
+                    <p>Una sola entidad (Una fila en tu tabla de atributos).<br><small>Ej. Un árbol específico.</small></p>
+                </div>
+                <div class="card">
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2l-5 9h10zM5 22h14v-9H5v9z" fill="currentColor"/></svg>
+                    <h3>QgsGeometry</h3>
+                    <p>La forma espacial y coordenadas de una entidad.<br><small>Ej. El polígono de un lago.</small></p>
+                </div>
+                <div class="card">
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" fill="currentColor"/></svg>
+                    <h3>QgsField</h3>
+                    <p>Una columna en tu tabla de atributos.<br><small>Ej. Columna "Uso_Suelo".</small></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 7: Primer contacto con PyQGIS -->
+        <section class="slide">
+            <h2>Jerarquía de la Información</h2>
+            <p>Para automatizar algo en un elemento específico, debemos seguir un camino lógico de "afuera hacia adentro":</p>
+            
+            <div class="flow-diagram horizontal" style="margin-top: 3rem; gap: 15px;">
+                <div class="flow-box">Proyecto</div>
+                <div class="arrow-right"></div>
+                <div class="flow-box accent">Capa</div>
+                <div class="arrow-right"></div>
+                <div class="flow-box">Entidad (Feature)</div>
+                <div class="arrow-right"></div>
+                <div class="flow-diagram" style="margin:0; gap:10px;">
+                    <div class="flow-box accent">Geometría (Dónde está)</div>
+                    <div class="flow-box accent">Atributos (Qué es)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 8: Acceder al proyecto -->
+        <section class="slide">
+            <h2>1. Acceder al Proyecto</h2>
+            <p>El primer paso siempre es decirle a Python: <em>"Quiero trabajar con el mapa que tengo abierto frente a mí"</em>.</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code><span class="token-comment"># Obtenemos la instancia del proyecto actual</span>
+project = <span class="token-function">QgsProject.instance</span>()
+
+<span class="token-comment"># Imprimimos la ruta donde está guardado el archivo</span>
+<span class="token-function">print</span>(project.fileName())</code></pre>
+            </div>
+
+            <div class="info-box">
+                El comando <strong>QgsProject.instance()</strong> es la llave maestra. Guarda todo el proyecto en una "caja" (variable) llamada <em>project</em> para que podamos consultarlo cuando queramos.
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 9: Obtener la capa activa -->
+        <section class="slide">
+            <h2>2. Obtener la capa activa</h2>
+            <p>Si tienes 20 capas en tu mapa, la forma más fácil de trabajar con una es seleccionarla con el ratón y decirle a Python que use "la que está activa".</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code><span class="token-comment"># 'iface' es la interfaz de QGIS. Le pedimos la capa activa.</span>
+layer = iface.<span class="token-function">activeLayer</span>()</code></pre>
+            </div>
+
+            <p>¿Qué devuelve esto?</p>
+            <ul class="icon-list">
+                <li>Devuelve un objeto de tipo <strong>QgsVectorLayer</strong> o <strong>QgsRasterLayer</strong>.</li>
+                <li>Si no tienes ninguna capa seleccionada en tu panel, devolverá <em>None</em> (Nada/Error).</li>
+            </ul>
+        </section>
+
+        <!-- DIAPOSITIVA 10: Explorando una capa -->
+        <section class="slide">
+            <h2>3. Explorando una capa</h2>
+            <p>Una vez que tenemos la capa en nuestra variable <em>layer</em>, podemos hacerle preguntas.</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code><span class="token-comment"># Imprimir el nombre de la capa</span>
+<span class="token-function">print</span>(layer.<span class="token-function">name</span>())
+
+<span class="token-comment"># Preguntar cuántas entidades (filas) tiene</span>
+total = layer.<span class="token-function">featureCount</span>()
+<span class="token-function">print</span>(<span class="token-string">"Total de elementos:"</span>, total)</code></pre>
+            </div>
+            
+            <div class="card" style="margin-top: 2rem;">
+                <p style="margin:0;"><strong>Ejemplo práctico:</strong> Imagina que necesitas contar cuántos árboles hay en 50 capas distintas. En lugar de abrir 50 tablas de atributos, Python lo cuenta por ti en microsegundos.</p>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 11: Recorriendo entidades -->
+        <section class="slide">
+            <h2>4. Recorriendo entidades (El bucle 'for')</h2>
+            <p>La verdadera magia de la automatización está en hacer que Python revise fila por fila tu tabla de atributos, sin que tú tengas que dar clic.</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code><span class="token-keyword">for</span> feature <span class="token-keyword">in</span> layer.<span class="token-function">getFeatures</span>():
+    <span class="token-comment"># Aquí adentro, Python repetirá el código por cada elemento</span>
+    <span class="token-function">print</span>(<span class="token-string">"Revisando un elemento..."</span>)</code></pre>
+            </div>
+
+            <div class="flow-diagram horizontal">
+                <div class="flow-box">Fila 1<br>(Árbol A)</div>
+                <div class="arrow-right"></div>
+                <div class="flow-box accent">Fila 2<br>(Árbol B)</div>
+                <div class="arrow-right"></div>
+                <div class="flow-box">Fila 3<br>(Árbol C)</div>
+                <div class="arrow-right"></div>
+                <div class="flow-box">...</div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 12: Accediendo a atributos -->
+        <section class="slide">
+            <h2>5. Accediendo a atributos</h2>
+            <p>Cuando Python está visitando un elemento específico (<em>feature</em>), podemos pedirle que lea cualquier columna de su tabla.</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code><span class="token-keyword">for</span> feature <span class="token-keyword">in</span> layer.<span class="token-function">getFeatures</span>():
+    <span class="token-comment"># Acceder a un campo usando el nombre de la columna entre [" "]</span>
+    nombre = feature[<span class="token-string">"Especie"</span>]
+    
+    <span class="token-comment"># Obtener el ID interno de la fila</span>
+    id_fila = feature.<span class="token-function">id</span>()
+    
+    <span class="token-function">print</span>(id_fila, nombre)</code></pre>
+            </div>
+
+            <div class="info-box" style="border-left-color: var(--primary-green);">
+                Python lee la tabla de atributos como si fuera un diccionario. Solo necesitas saber el nombre exacto de la columna para extraer la información.
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 13: Trabajando con geometrías -->
+        <section class="slide">
+            <h2>6. Trabajando con geometrías</h2>
+            <p>Además de la tabla, podemos medir y analizar la forma dibujada en el mapa.</p>
+            
+            <div class="code-block">
+                <div class="code-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <pre><code>geom = feature.<span class="token-function">geometry</span>()  <span class="token-comment"># Extraemos la forma geométrica</span>
+
+area_total = geom.<span class="token-function">area</span>()     <span class="token-comment"># Calcula el área (Si es polígono)</span>
+longitud = geom.<span class="token-function">length</span>()   <span class="token-comment"># Calcula la distancia (Si es línea)</span>
+punto = geom.<span class="token-function">asPoint</span>()     <span class="token-comment"># Extrae X, Y (Si es punto)</span></code></pre>
+            </div>
+
+            <div class="grid-cards" style="grid-template-columns: repeat(3, 1fr); margin-top: 1rem;">
+                <div class="card" style="text-align: center; padding: 1rem;">
+                    <svg width="40" height="40"><circle cx="20" cy="20" r="8" fill="var(--primary-blue)"/></svg><br><strong>asPoint()</strong>
+                </div>
+                <div class="card" style="text-align: center; padding: 1rem;">
+                    <svg width="40" height="40"><path d="M5 35 L35 5" stroke="var(--primary-blue)" stroke-width="4"/></svg><br><strong>length()</strong>
+                </div>
+                <div class="card" style="text-align: center; padding: 1rem;">
+                    <svg width="40" height="40"><polygon points="5,35 35,35 20,5" fill="var(--primary-blue)"/></svg><br><strong>area()</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 14: Transformación de coordenadas -->
+        <section class="slide">
+            <h2>El Sistema de Referencia (CRS / EPSG)</h2>
+            <p>Antes de automatizar cálculos, debemos recordar que QGIS proyecta la Tierra sobre un plano. Dependiendo de cómo lo haga, usamos Metros o Grados.</p>
+            
+            <div class="grid-cards" style="grid-template-columns: 1fr 1fr;">
+                <div class="card">
+                    <h3>¿Qué es el EPSG?</h3>
+                    <p>Es un código numérico global que identifica un sistema de coordenadas. <br><br>Por ejemplo:<br><strong>EPSG:4326</strong> = Coordenadas geográficas (Grados).<br><strong>EPSG:32616</strong> = UTM Zona 16N (Metros).</p>
+                </div>
+                <div class="card">
+                    <h3>Transformación (Transform)</h3>
+                    <p>En PyQGIS, podemos indicarle a Python que transforme las coordenadas de un punto de un EPSG a otro <em>al vuelo</em>, sin modificar nuestro archivo original.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 15: Práctica del módulo -->
+        <section class="slide">
+            <h2>Práctica del Módulo</h2>
+            <p>Extracción automática de coordenadas X, Y. Vamos a crear un script que siga este flujo de trabajo de manera automática para cientos de puntos:</p>
+            
+            <div class="flow-diagram">
+                <div class="flow-box">Capa de puntos activa</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box accent">Transformación a métrico (CRS)</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box">Obtención geométrica de X, Y</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box accent">Redondeo a 2 decimales</div>
+                <div class="arrow-down"></div>
+                <div class="flow-box">Guardar en nuevos campos de la tabla</div>
+            </div>
+        </section>
+
+        <!-- DIAPOSITIVA 16: Resumen -->
+        <section class="slide">
+            <h2>Resumen del Módulo</h2>
+            <p>¡Gran trabajo! Has comprendido la estructura fundamental de PyQGIS.</p>
+            
+            <ul class="icon-list">
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Entiendes la diferencia entre la consola y el editor.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Sabes cómo "capturar" el proyecto y la capa activa.</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Comprendes la jerarquía (Capa ➔ Feature ➔ Geometry).</li>
+                <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Conoces cómo un bucle <code>for</code> lee la tabla de atributos por ti.</li>
+            </ul>
+
+            <div class="info-box" style="background-color: #f0fdf4; border-color: var(--primary-green); text-align: center; margin-top: 3rem; font-size: 1.4rem;">
+                <strong>"Ya estamos listos para comenzar a automatizar procesos reales dentro de QGIS."</strong>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             CONTROLES DE NAVEGACIÓN
+             ========================================================================== -->
+        <div class="slide-counter" id="slide-counter">1 / 16</div>
+        
+        <div class="controls">
+            <button class="btn-nav" id="prev-btn" title="Anterior">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <button class="btn-nav" id="next-btn" title="Siguiente">
+                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT (LÓGICA DE NAVEGACIÓN)
+         ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            const progressBar = document.getElementById('progress-bar');
+            const counterDisplay = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            // Función para actualizar la vista
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('active', 'prev');
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    } else if (index < currentSlide) {
+                        slide.classList.add('prev'); // Oculta a la izquierda
+                    }
+                });
+                
+                // Actualizar barra de progreso y contador
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = progress + '%';
+                counterDisplay.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+            }
+
+            // Ir a diapositiva siguiente
+            function nextSlide() {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            // Ir a diapositiva anterior
+            function prevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            // Listeners para botones click
+            document.getElementById('next-btn').addEventListener('click', nextSlide);
+            document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+            // Listeners para teclado
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowRight' || event.key === ' ') {
+                    event.preventDefault();
+                    nextSlide();
+                } else if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    prevSlide();
+                }
+            });
+
+            // Inicializar vista
+            updateSlides();
+        });
+    </script>
+</body>
+</html>

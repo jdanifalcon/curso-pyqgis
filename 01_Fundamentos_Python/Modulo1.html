@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1: Fundamentos de Python</title>
+    <style>
+        /* Paleta de colores y estilos base */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --text-color: #333;
+            --bg-color: #ecf0f1;
+            --code-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+
+        /* Estructura de las diapositivas */
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        .content-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 950px;
+            width: 100%;
+        }
+
+        h1 { color: var(--primary-color); font-size: 2.5rem; text-align: center; margin-bottom: 10px; }
+        h2 { color: var(--accent-color); font-size: 1.8rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 8px; }
+        h3 { color: #2980b9; margin-top: 20px; }
+        
+        p, li { font-size: 1.15rem; line-height: 1.6; }
+        ul { margin-top: 10px; }
+
+        /* Bloques de código */
+        pre {
+            background-color: var(--code-bg);
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #569cd6; font-weight: bold; }
+        .code-string { color: #ce9178; }
+        .code-number { color: #b5cea8; }
+        .code-variable { color: #9cdcfe; }
+
+        .navigation { text-align: center; margin-top: 30px; font-size: 0.9rem; color: #7f8c8d; font-weight: bold; }
+
+        /* =========================================================
+           ESTILOS PARA EL DIAGRAMA DE ÁRBOL CSS (ESTRUCTURAS DE DATOS)
+           ========================================================= */
+        .tree-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            font-family: Arial, sans-serif;
+            overflow-x: auto;
+        }
+
+        .tree-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .node {
+            padding: 12px 25px;
+            margin: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .node-blue { background: linear-gradient(135deg, #2980b9, #3498db); }
+        .node-grey { background: linear-gradient(135deg, #7f8c8d, #95a5a6); }
+        .node-green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+
+        /* Conectores con Flechas Simples para compatibilidad universal */
+        .connector {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DIAPOSITIVA 1: PORTADA -->
+    <section class="slide" id="slide1">
+        <div class="content-box">
+            <h1>Introducción a Python en QGIS</h1>
+            <h2 style="text-align: center; border: none; color: var(--text-color);">Módulo 1: Fundamentos desde Cero</h2>
+            <p style="text-align: center; font-size: 1.3rem;"><strong>Instructora:</strong> Jessica Daniela Ocaña Falcón</p>
+            <div class="navigation">↓ Desplázate hacia abajo para continuar ↓</div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 2: DIAGRAMA DE ESTRUCTURAS DE DATOS -->
+    <section class="slide" id="slide2">
+        <div class="content-box">
+            <h2>1. Estructuras de Datos en Python</h2>
+            <p>Antes de programar, debemos conocer cómo clasifica Python la información. Este es el mapa fundamental de los datos:</p>
+            
+            <!-- DIAGRAMA HTML/CSS -->
+            <div class="tree-container">
+                <!-- Nivel 1 -->
+                <div class="tree-col">
+                    <div class="node node-blue">Estructuras de<br>datos en Python</div>
+                </div>
+                
+                <div class="tree-col connector">➔</div>
+
+                <!-- Nivel 2 -->
+                <div class="tree-col">
+                    <div class="node node-grey">Primitivas</div>
+                    <div style="height: 150px;"></div> <!-- Espaciador -->
+                    <div class="node node-green">No Primitivas</div>
+                </div>
+
+                <div class="tree-col connector">
+                    <div style="margin-bottom: 200px;">➔</div>
+                    <div>➔</div>
+                </div>
+
+                <!-- Nivel 3 -->
+                <div class="tree-col">
+                    <div class="node node-grey">Integer</div>
+                    <div class="node node-grey">Float</div>
+                    <div class="node node-grey">String</div>
+                    <div class="node node-grey">Boolean</div>
+                    
+                    <div style="height: 20px;"></div>
+                    
+                    <div class="node node-green">List</div>
+                    <div class="node node-green">Tuple</div>
+                    <div class="node node-green">Dictionary</div>
+                    <div class="node node-green">Set</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 3: VARIABLES Y ASIGNACIÓN -->
+    <section class="slide" id="slide3">
+        <div class="content-box">
+            <h2>2. Variables y Asignación</h2>
+            <p>Una variable es una "caja" con un nombre, donde guardamos un dato. La asignación se hace con el signo de igual (<code>=</code>).</p>
+            <ul>
+                <li>Python es de <strong>tipado dinámico</strong>: no necesitas decirle si es texto o número, él lo adivina.</li>
+            </ul>
+<pre>
+<span class="code-comment"># Asignación de variables Primitivas</span>
+<span class="code-variable">nombre_municipio</span> = <span class="code-string">"Progreso"</span>   <span class="code-comment"># String (Texto)</span>
+<span class="code-variable">poblacion</span> = <span class="code-number">66008</span>               <span class="code-comment"># Integer (Entero)</span>
+<span class="code-variable">temperatura</span> = <span class="code-number">34.5</span>              <span class="code-comment"># Float (Decimal)</span>
+<span class="code-variable">es_costero</span> = <span class="code-keyword">True</span>               <span class="code-comment"># Boolean (Verdadero / Falso)</span>
+</pre>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 4: OPERADORES MATEMÁTICOS Y CÁLCULOS -->
+    <section class="slide" id="slide4">
+        <div class="content-box">
+            <h2>3. Operadores Matemáticos</h2>
+            <p>Los símbolos para hacer cálculos matemáticos entre variables numéricas:</p>
+            <ul>
+                <li><strong>Suma:</strong> <code>+</code> &nbsp; | &nbsp; <strong>Resta:</strong> <code>-</code></li>
+                <li><strong>Multiplicación:</strong> <code>*</code> &nbsp; | &nbsp; <strong>División:</strong> <code>/</code> (Devuelve decimales)</li>
+                <li><strong>Exponente (Potencia):</strong> <code>**</code></li>
+                <li><strong>División entera:</strong> <code>//</code> (Quita los decimales del resultado)</li>
+            </ul>
+<pre>
+<span class="code-comment"># Cálculos utilizando variables</span>
+<span class="code-variable">base_lote</span> = <span class="code-number">20</span>
+<span class="code-variable">altura_lote</span> = <span class="code-number">50</span>
+
+<span class="code-variable">area_total</span> = <span class="code-variable">base_lote</span> * <span class="code-variable">altura_lote</span>
+<span class="code-keyword">print</span>(<span class="code-string">"El área es:"</span>, <span class="code-variable">area_total</span>)  <span class="code-comment"># Resultado: 1000</span>
+</pre>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 5: OPERACIONES CON OTROS TIPOS DE DATOS -->
+    <section class="slide" id="slide5">
+        <div class="content-box">
+            <h2>4. Operaciones con Textos (Strings)</h2>
+            <p>¡Los operadores matemáticos también funcionan con otros tipos de datos, como los textos!</p>
+            <ul>
+                <li><strong>Concatenación (<code>+</code>):</strong> Une dos o más textos.</li>
+                <li><strong>Repetición (<code>*</code>):</strong> Multiplica un texto varias veces.</li>
+            </ul>
+<pre>
+<span class="code-comment"># Uniendo textos (Concatenación)</span>
+<span class="code-variable">palabra_1</span> = <span class="code-string">"Área de "</span>
+<span class="code-variable">palabra_2</span> = <span class="code-string">"Conservación"</span>
+<span class="code-variable">resultado</span> = <span class="code-variable">palabra_1</span> + <span class="code-variable">palabra_2</span>
+<span class="code-keyword">print</span>(<span class="code-variable">resultado</span>)  <span class="code-comment"># Imprime: Área de Conservación</span>
+
+<span class="code-comment"># Repitiendo textos</span>
+<span class="code-variable">linea_separadora</span> = <span class="code-string">"-"</span> * <span class="code-number">20</span>
+<span class="code-keyword">print</span>(<span class="code-variable">linea_separadora</span>)  <span class="code-comment"># Imprime: --------------------</span>
+</pre>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 6: LISTAS EN PYTHON -->
+    <section class="slide" id="slide6">
+        <div class="content-box">
+            <h2>5. Las Listas (Estructuras No Primitivas)</h2>
+            <p>Una Lista te permite guardar múltiples datos dentro de una sola variable. Se crean usando corchetes <code>[ ]</code> y separando los elementos con comas.</p>
+            <ul>
+                <li>Pueden contener tipos de datos mezclados.</li>
+                <li>El conteo de posiciones (índices) ¡Siempre empieza desde el CERO!</li>
+            </ul>
+<pre>
+<span class="code-comment"># Crear una lista de capas</span>
+<span class="code-variable">mis_capas</span> = [<span class="code-string">"Rios"</span>, <span class="code-string">"Vialidades"</span>, <span class="code-string">"Uso_Suelo"</span>]
+
+<span class="code-comment"># Acceder a un elemento (El 0 es "Rios")</span>
+<span class="code-keyword">print</span>(<span class="code-variable">mis_capas</span>[<span class="code-number">0</span>]) 
+
+<span class="code-comment"># Agregar un nuevo elemento al final de la lista</span>
+<span class="code-variable">mis_capas</span>.append(<span class="code-string">"Curvas_Nivel"</span>)
+</pre>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 7: FUNCIONES Y PAQUETES -->
+    <section class="slide" id="slide7">
+        <div class="content-box">
+            <h2>6. Funciones y Paquetes (Librerías)</h2>
+            <p><strong>Funciones:</strong> Son acciones prefabricadas que hacen el trabajo duro por ti. Llevan paréntesis <code>()</code>.</p>
+            <p><strong>Paquetes/Librerías:</strong> Son "cajas de herramientas" adicionales que puedes traer a tu proyecto usando el comando <code>import</code>.</p>
+<pre>
+<span class="code-comment"># FUNCIONES NATIVAS (Ya vienen listas para usar)</span>
+<span class="code-keyword">print</span>(<span class="code-string">"Esto es una función"</span>)
+<span class="code-variable">cantidad</span> = <span class="code-keyword">len</span>(<span class="code-variable">mis_capas</span>) <span class="code-comment"># len() cuenta cuántos elementos hay</span>
+
+<span class="code-comment"># IMPORTAR PAQUETES (Traer nuevas herramientas)</span>
+<span class="code-keyword">import</span> math  <span class="code-comment"># Importa la librería de matemáticas avanzadas</span>
+<span class="code-keyword">import</span> os    <span class="code-comment"># Importa herramientas para leer carpetas de Windows/Mac</span>
+
+<span class="code-variable">raiz</span> = math.sqrt(<span class="code-number">64</span>) <span class="code-comment"># Saca la raíz cuadrada usando el paquete math</span>
+</pre>
+        </div>
+    </section>
+    <!-- DIAPOSITIVA 7.5: LA HISTORIA DE PYQGIS -->
+    <section class="slide" id="slide-historia">
+        <div class="content-box">
+            <h2>7. ¿Cómo llegó Python a QGIS? (Breve Historia)</h2>
+            <p>QGIS no siempre fue tan amigable para automatizar. Su evolución fue impulsada por la necesidad de usuarios que querían dejar de hacer tareas repetitivas a mano.</p>
+            
+            <ul>
+                <li><strong>El origen (2002):</strong> QGIS fue creado en el lenguaje <strong>C++</strong>. Muy rápido, pero sumamente difícil de aprender para profesionales que no eran ingenieros de software.</li>
+                <li><strong>La Revolución (2007):</strong> Con QGIS 0.9, se introdujo oficialmente <strong>PyQGIS</strong>. El objetivo era democratizar el desarrollo, eligiendo a Python por ser el lenguaje más intuitivo para científicos y analistas.</li>
+                <li><strong>El Boom de los Plugins:</strong> Gracias a Python, la comunidad comenzó a crear miles de complementos. Hoy, la gran mayoría de los plugins de QGIS están escritos en Python por usuarios como tú.</li>
+                <li><strong>QGIS 3.x y el futuro (2018-Actualidad):</strong> QGIS adoptó <strong>Python 3</strong> como su estándar definitivo, permitiendo conectar mapas con inteligencia artificial, Big Data y análisis espacial masivo en cuestión de segundos.</li>
+            </ul>
+
+            <div class="image-reference" style="border-left-color: var(--primary-color);">
+                <strong>La moraleja:</strong> PyQGIS existe porque profesionales de diversas áreas necesitaban una herramienta sencilla para hablar con el motor complejo de QGIS. ¡Ustedes son la nueva generación de esa comunidad!
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 8: CIERRE -->
+    <section class="slide" id="slide8">
+        <div class="content-box">
+            <h1 style="color: var(--accent-color);">¡Felicidades!</h1>
+            <h2>Conclusión del Módulo 1</h2>
+            <p>Ahora cuentas con las bases sólidas para entender el código de QGIS:</p>
+            <ul>
+                <li>Entiendes las estructuras de datos y variables.</li>
+                <li>Sabes hacer cálculos y unir textos.</li>
+                <li>Conoces cómo almacenar mucha información en Listas.</li>
+                <li>Sabes cómo importar Paquetes adicionales.</li>
+            </ul>
+            <p style="text-align: center; margin-top: 40px; font-weight: bold; font-size: 1.4rem;">
+                ¡Estamos listos para abrir la consola y pasar al Módulo 2!
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>
