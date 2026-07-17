@@ -698,6 +698,10 @@ for feature in layer.getFeatures():
                             <span class="info-value">27, 28, 29 y 30 de julio</span>
                         </div>
                         <div class="info-item">
+                            <span class="info-label">Horario</span>
+                            <span class="info-value">18:00 a 20:00 h (hora centro de México)</span>
+                        </div>
+                        <div class="info-item">
                             <span class="info-label">Modalidad / Horas</span>
                             <span class="info-value">En línea / 8 horas totales</span>
                         </div>
@@ -729,7 +733,7 @@ for feature in layer.getFeatures():
             <h2 class="section-title">Temario Detallado</h2>
 
             <div class="module-block">
-                <span class="mod-meta">Módulo 1</span>
+                <span class="mod-meta">Día 1 · Módulo 1</span>
                 <h3 class="mod-title">Fundamentos de Python desde cero</h3>
                 <div class="mod-objective">
                     <strong>Objetivo:</strong> Perder el miedo al código, entendiendo la sintaxis básica antes de interactuar con el mapa.
@@ -745,21 +749,20 @@ for feature in layer.getFeatures():
                     <div class="topic-item">
                         <h4>Sintaxis y Estructuras</h4>
                         <ul>
-                            <li>Creación de variables y tipos de datos (texto, números, booleanos).</li>
-                            <li>Uso de listas y sentencias condicionales (If / Else).</li>
+                            <li>Variables y tipos de datos (texto, números, booleanos).</li>
+                            <li>Listas y sentencias condicionales (<code>if</code> / <code>else</code>).</li>
+                            <li>Ciclos <code>for</code>: recorrer elementos de una lista.</li>
                         </ul>
                     </div>
-                    <div class="topic-item">
-                        <h4>Buenas prácticas</h4>
-                        <ul>
-                            <li>Cómo comentar y organizar el código de forma limpia.</li>
-                        </ul>
+                    <div class="integrator-box">
+                        <strong>MINI-EJERCICIO: Primer script en la consola.</strong><br>
+                        Crear una lista de nombres de capas y recorrerla con un ciclo <code>for</code> para imprimirlas en la consola de QGIS.
                     </div>
                 </div>
             </div>
 
             <div class="module-block">
-                <span class="mod-meta">Módulo 2</span>
+                <span class="mod-meta">Día 2 · Módulo 2</span>
                 <h3 class="mod-title">Introducción a PyQGIS y primeras automatizaciones</h3>
                 <div class="mod-objective">
                     <strong>Objetivo:</strong> Dar el salto a la interfaz de QGIS, aplicando código para consultar información y resolver problemas comunes de coordenadas.
@@ -786,50 +789,59 @@ for feature in layer.getFeatures():
             </div>
 
             <div class="module-block">
-                <span class="mod-meta">Módulo 3</span>
-                <h3 class="mod-title">Procesamiento geométrico y filtros masivos</h3>
+                <span class="mod-meta">Día 3 · Módulo 3</span>
+                <h3 class="mod-title">Procesamiento geométrico y campos</h3>
                 <div class="mod-objective">
-                    <strong>Objetivo:</strong> Aprender a manipular capas masivas y a realizar cálculos tediosos en cuestión de segundos.
+                    <strong>Objetivo:</strong> Aprender a manipular geometrías, crear campos nuevos y realizar cálculos masivos en cuestión de segundos.
                 </div>
                 <div class="topics-grid">
                     <div class="topic-item">
-                        <h4>Trabajo con bases de datos pesadas</h4>
+                        <h4>Geometría y Campos</h4>
                         <ul>
-                            <li>Identificación de atributos en capas oficiales.</li>
+                            <li><code>QgsGeometry</code>: obtener áreas, perímetros y coordenadas.</li>
+                            <li><code>QgsField</code>: crear nuevos campos en la tabla de atributos.</li>
+                        </ul>
+                    </div>
+                    <div class="topic-item">
+                        <h4>Trabajo con datos oficiales</h4>
+                        <ul>
+                            <li>Identificación de atributos en capas masivas.</li>
+                            <li>Filtros rápidos con Python para extraer información específica (Ej. datos INEGI).</li>
                         </ul>
                     </div>
                     <div class="integrator-box" style="margin-top: 0;">
-                        <strong>PRÁCTICA 1: Automatización de cálculos y uniones.</strong><br>
+                        <strong>PRÁCTICA: Automatización de cálculos y uniones.</strong><br>
                         Uso de código para leer múltiples lotes/polígonos. Cálculo automático de Área y Perímetro en nuevas columnas. Unión masiva (Merge) de todos los lotes procesados en una sola capa final.
-                    </div>
-                    <div class="integrator-box" style="margin-top: 0;">
-                        <strong>PRÁCTICA 2: Filtros de alta velocidad (Datos INEGI).</strong><br>
-                        Carga de una capa masiva vectorial (Ej. Uso de Suelo, Vegetación o DENUE). Aplicación de filtros mediante Python para extraer información específica sin colapsar QGIS.
                     </div>
                 </div>
             </div>
 
             <div class="module-block" style="margin-bottom: 0;">
-                <span class="mod-meta">Módulo 4</span>
-                <h3 class="mod-title">Automatización avanzada y cierre de proyecto</h3>
+                <span class="mod-meta">Día 4 · Módulo 4</span>
+                <h3 class="mod-title">Automatización con Processing y cierre</h3>
                 <div class="mod-objective">
                     <strong>Objetivo:</strong> Usar las herramientas de geoproceso de QGIS (Processing) directamente desde Python para tareas complejas.
                 </div>
                 <div class="topics-grid">
                     <div class="topic-item">
-                        <h4>Algoritmos nativos y Cierre</h4>
+                        <h4>Introducción a Processing</h4>
                         <ul>
-                            <li>Llamado a algoritmos nativos: Cómo usar la Caja de Herramientas desde el código.</li>
-                            <li>Cierre del curso: Repaso general, resolución de dudas y recursos para seguir aprendiendo.</li>
+                            <li>Llamado a algoritmos nativos con <code>processing.run()</code>.</li>
+                            <li>Cómo usar la Caja de Herramientas desde el código.</li>
+                        </ul>
+                    </div>
+                    <div class="topic-item">
+                        <h4>Demostración en vivo</h4>
+                        <ul>
+                            <li>Interpolación (IDW) y recorte (Clip) de un raster con un polígono de límite.</li>
                         </ul>
                     </div>
                     <div class="integrator-box" style="margin-top: 0;">
-                        <strong>PRÁCTICA 1: Interpolación y Recorte (Clip).</strong><br>
-                        Generación de un modelo de interpolación (IDW) a partir de puntos de muestreo y recorte automático del raster resultante utilizando un polígono de límite (Área de estudio).
+                        <strong>PROYECTO FINAL: Limpieza y empaquetado de proyectos.</strong><br>
+                        Script para buscar múltiples archivos Shapefiles sueltos en una carpeta y convertirlos automáticamente en una base de datos unificada en formato GeoPackage.
                     </div>
                     <div class="integrator-box" style="margin-top: 0;">
-                        <strong>PRÁCTICA 2 (PROYECTO FINAL): Limpieza y empaquetado de proyectos.</strong><br>
-                        Script para buscar múltiples archivos Shapefiles sueltos en una carpeta y convertirlos automáticamente en una base de datos unificada en formato GeoPackage.
+                        <strong>CIERRE:</strong> Repaso general, resolución de dudas y recursos para seguir aprendiendo.
                     </div>
                 </div>
             </div>
